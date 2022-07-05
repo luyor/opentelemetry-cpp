@@ -57,6 +57,16 @@ public:
     return std::unique_ptr<Recordable>(nullptr);
   }
 
+  // FIXME: 临时添加GetStatus、GetDuration、GetSpanContext用于span后采样
+  opentelemetry::trace::StatusCode GetStatus() const noexcept override { __builtin_unreachable(); }
+
+  std::chrono::nanoseconds GetDuration() const noexcept override { __builtin_unreachable(); }
+
+  const opentelemetry::trace::SpanContext &GetSpanContext() const noexcept
+  {
+    __builtin_unreachable();
+  }
+
   void SetIdentity(const opentelemetry::trace::SpanContext &span_context,
                    opentelemetry::trace::SpanId parent_span_id) noexcept override
   {

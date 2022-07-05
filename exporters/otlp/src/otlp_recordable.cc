@@ -26,6 +26,9 @@ void OtlpRecordable::SetIdentity(const opentelemetry::trace::SpanContext &span_c
                              trace::SpanId::kSize);
   }
   span_.set_trace_state(span_context.trace_state()->ToHeader());
+
+  // FIXME: 临时添加span_context_用于span后采样
+  span_context_ = span_context;
 }
 
 proto::resource::v1::Resource OtlpRecordable::ProtoResource() const noexcept
@@ -71,6 +74,23 @@ proto::common::v1::InstrumentationLibrary OtlpRecordable::GetProtoInstrumentatio
     instrumentation_library.set_version(instrumentation_library_->GetVersion());
   }
   return instrumentation_library;
+}
+
+// FIXME: 临时添加GetStatus、GetDuration用于span后采样
+opentelemetry::trace::StatusCode OtlpRecordable::GetStatus() const noexcept
+{
+  return opentelemetry::trace::StatusCode(span_.status().code());
+}
+
+std::chrono::nanoseconds OtlpRecordable::GetDuration() const noexcept
+{
+  auto duration_nano = span_.end_time_unix_nano() - span_.start_time_unix_nano();
+  return std::chrono::nanoseconds(duration_nano);
+}
+
+const opentelemetry::trace::SpanContext &OtlpRecordable::GetSpanContext() const noexcept
+{
+  return span_context_;
 }
 
 void OtlpRecordable::SetResource(const sdk::resource::Resource &resource) noexcept

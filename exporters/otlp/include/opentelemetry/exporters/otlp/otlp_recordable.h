@@ -32,6 +32,11 @@ public:
 
   proto::common::v1::InstrumentationLibrary GetProtoInstrumentationLibrary() const noexcept;
 
+  // FIXME: 临时添加GetStatus、GetDuration、GetSpanContext用于span后采样
+  opentelemetry::trace::StatusCode GetStatus() const noexcept;
+  std::chrono::nanoseconds GetDuration() const noexcept;
+  const opentelemetry::trace::SpanContext &GetSpanContext() const noexcept;
+
   void SetIdentity(const opentelemetry::trace::SpanContext &span_context,
                    opentelemetry::trace::SpanId parent_span_id) noexcept override;
 
@@ -66,6 +71,9 @@ private:
   const opentelemetry::sdk::resource::Resource *resource_ = nullptr;
   const opentelemetry::sdk::instrumentationlibrary::InstrumentationLibrary
       *instrumentation_library_ = nullptr;
+
+  // FIXME: 临时添加span_context_用于span后采样
+  opentelemetry::trace::SpanContext span_context_{false, false};
 };
 }  // namespace otlp
 }  // namespace exporter

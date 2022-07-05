@@ -39,6 +39,25 @@ class Recordable
 public:
   virtual ~Recordable() = default;
 
+  // FIXME: 临时添加GetStatus、GetDuration、GetSpanContext用于span后采样
+  /**
+   * Get the status for this span
+   * @return the status for this span
+   */
+  virtual opentelemetry::trace::StatusCode GetStatus() const noexcept = 0;
+
+  /**
+   * Get the duration for this span
+   * @return the duration for this span
+   */
+  virtual std::chrono::nanoseconds GetDuration() const noexcept = 0;
+
+  /**
+   * Get the span context for this span
+   * @return the span context for this span
+   */
+  virtual const opentelemetry::trace::SpanContext &GetSpanContext() const noexcept = 0;
+
   /**
    * Set the span context and parent span id
    * @param span_context the span context to set
