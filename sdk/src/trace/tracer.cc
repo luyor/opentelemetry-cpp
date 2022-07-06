@@ -5,9 +5,9 @@
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/sdk/common/atomic_shared_ptr.h"
+#include "opentelemetry/sdk/trace/span.h"
 #include "opentelemetry/trace/context.h"
 #include "opentelemetry/version.h"
-#include "src/trace/span.h"
 
 #include <memory>
 

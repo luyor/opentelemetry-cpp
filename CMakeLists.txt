@@ -17,11 +17,11 @@ mark_as_advanced(CMAKE_TOOLCHAIN_FILE)
 
 # Don't use customized cmake modules if vcpkg is used to resolve dependence.
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-  list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules/")
+  list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules/")
 endif()
 
-if(EXISTS "${CMAKE_SOURCE_DIR}/third_party_release")
-  file(STRINGS "${CMAKE_SOURCE_DIR}/third_party_release" third_party_tags)
+if(EXISTS "${PROJECT_SOURCE_DIR}/third_party_release")
+  file(STRINGS "${PROJECT_SOURCE_DIR}/third_party_release" third_party_tags)
   foreach(third_party ${third_party_tags})
     string(REGEX REPLACE "^[ ]+" "" third_party ${third_party})
     string(REGEX MATCH "^[^=]+" third_party_name ${third_party})
